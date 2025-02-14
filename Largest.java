@@ -13,12 +13,14 @@ public class Largest {
 
         int c = in.nextInt();
 
-        if (a > b & a > c) {
-            System.out.println("the number is largest" + a);
-        } else if (b > a & b > c) {
-            System.out.println("the number is largest" + b);
-        } else {
-            System.out.println("the largest number is" + c);
-        }
+        // if (a > b & a > c) {
+        //     System.out.println("the number is largest" + a);
+        // } else if (b > a & b > c) {
+        //     System.out.println("the number is largest" + b);
+        // } else {
+        //     System.out.println("the largest number is" + c);
+        // }
+        int max = Math.max(c, Math.max(a, b));
+        System.out.println("largest number is:" + max);
     }
 }
