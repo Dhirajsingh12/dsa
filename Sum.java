@@ -1,4 +1,4 @@
- 
+
 import java.util.Scanner;
 
 public class Sum {
@@ -10,7 +10,7 @@ public class Sum {
         System.out.println("enter second number");
         int b = input.nextInt();
         int c = a + b;
-        System.out.println("sum of two number" + c);
+        System.out.println("sum of two number:-" + c);
 
     }
 }
