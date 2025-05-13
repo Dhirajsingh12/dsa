@@ -26,7 +26,6 @@ public class array1 {
         System.out.println(age[1]);
         System.out.println(age[2]);
     }
-
     public static void main(String[] args) {
         array1 obj = new array1();
         obj.arraydemo();
