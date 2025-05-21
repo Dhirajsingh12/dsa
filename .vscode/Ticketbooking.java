@@ -1,19 +1,19 @@
 
-class Ticketbooking implements Runnable {
+public class TicketBooking implements Runnable {
 
     private static int availableTickets = 10;
     private String user;
     private int ticketsRequested;
 
     // Constructor
-    public Ticketbooking(String user, int ticketsRequested) {
+    public TicketBooking(String user, int ticketsRequested) {
         this.user = user;
         this.ticketsRequested = ticketsRequested;
     }
 
     // Run method for thread execution
     public void run() {
-        synchronized (Ticketbooking.class) {
+        synchronized (TicketBooking.class) {
             System.out.println(user + " is trying to book " + ticketsRequested + " ticket(s)...");
 
             if (availableTickets >= ticketsRequested) {
@@ -32,10 +32,10 @@ class Ticketbooking implements Runnable {
     }
 
     public static void main(String[] args) {
-        Thread t1 = new Thread(new Ticketbooking("Alice", 4));
-        Thread t2 = new Thread(new Ticketbooking("Bob", 2));
-        Thread t3 = new Thread(new Ticketbooking("Charlie", 5));
-        Thread t4 = new Thread(new Ticketbooking("Diana", 1));
+        Thread t1 = new Thread(new TicketBooking("Alice", 4));
+        Thread t2 = new Thread(new TicketBooking("Bob", 2));
+        Thread t3 = new Thread(new TicketBooking("Charlie", 5));
+        Thread t4 = new Thread(new TicketBooking("Diana", 1));
 
         t1.start();
         t2.start();
