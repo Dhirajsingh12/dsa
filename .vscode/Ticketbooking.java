@@ -5,13 +5,11 @@ public class TicketBooking implements Runnable {
     private String user;
     private int ticketsRequested;
 
-    // Constructor
     public TicketBooking(String user, int ticketsRequested) {
         this.user = user;
         this.ticketsRequested = ticketsRequested;
     }
 
-    // Run method for thread execution
     public void run() {
         synchronized (TicketBooking.class) {
             System.out.println(user + " is trying to book " + ticketsRequested + " ticket(s)...");
@@ -21,7 +19,7 @@ public class TicketBooking implements Runnable {
                 availableTickets -= ticketsRequested;
 
                 try {
-                    Thread.sleep(1000); // Simulate processing delay
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     System.out.println("Booking interrupted for " + user);
                 }
