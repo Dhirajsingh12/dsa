@@ -1,54 +1,68 @@
 
-public class TicketBooking implements Runnable {
+class BookTicket {
 
-    private static int availableTickets = 10;
-    private String user;
-    private int ticketsRequested;
+    static int total_seats = 10;
 
-    public TicketBooking(String user, int ticketsRequested) {
-        this.user = user;
-        this.ticketsRequested = ticketsRequested;
+    static synchronized void bookTicket(int seats) {
+        if (total_seats >= seats) {
+            System.out.println("success");
+            total_seats = total_seats - seats;
+            System.out.println("seats left : " + total_seats);
+        } else {
+            System.err.println("fail");
+        }
+    }
+}
+
+class MyThread1 extends Thread {
+
+    BookTicket bt;
+    int seats;
+
+    MyThread1(BookTicket bt, int seats) {
+        this.bt = bt;
+        this.seats = seats;
     }
 
     public void run() {
-        synchronized (TicketBooking.class) {
-            System.out.println(user + " is trying to book " + ticketsRequested + " ticket(s)...");
+        bt.bookTicket(seats);
+    }
+}
 
-            if (availableTickets >= ticketsRequested) {
-                System.out.println(user + " booking confirmed for " + ticketsRequested + " ticket(s).");
-                availableTickets -= ticketsRequested;
+class MyThread2 extends Thread {
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    System.out.println("Booking interrupted for " + user);
-                }
-            } else {
-                System.out.println("Sorry " + user + ", not enough tickets available (Requested: " + ticketsRequested + ", Available: " + availableTickets + ")");
-            }
-        }
+    BookTicket bt;
+    int seats;
+
+    MyThread2(BookTicket bt, int seats) {
+        this.bt = bt;
+        this.seats = seats;
     }
 
-    public static void main(String[] args) {
-        Thread t1 = new Thread(new TicketBooking("Alice", 4));
-        Thread t2 = new Thread(new TicketBooking("Bob", 2));
-        Thread t3 = new Thread(new TicketBooking("Charlie", 5));
-        Thread t4 = new Thread(new TicketBooking("Diana", 1));
+    public void run() {
+        bt.bookTicket(seats);
+    }
+}
 
+public class TicketBooking {
+
+    public static void main(String[] args) {
+        BookTicket bt1 = new BookTicket();
+
+        MyThread1 t1 = new MyThread1(bt1, 7);
         t1.start();
+
+        MyThread1 t2 = new MyThread1(bt1, 4);
         t2.start();
+
+        //----------------------------------------------------
+        BookTicket bt2 = new BookTicket();
+
+        MyThread2 t3 = new MyThread2(bt2, 5);
         t3.start();
+
+        MyThread2 t4 = new MyThread2(bt2, 6);
         t4.start();
 
-        try {
-            t1.join();
-            t2.join();
-            t3.join();
-            t4.join();
-        } catch (InterruptedException e) {
-            System.out.println("Thread interrupted");
-        }
-
-        System.out.println("\nTickets remaining: " + availableTickets);
     }
 }
